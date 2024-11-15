@@ -19,6 +19,8 @@ import {PetProvider} from "../contexts/post/PetProvider";
 import LandingPage from "../views/LandingPage.jsx";
 import Settings from "../views/Settings.jsx";
 import ProtectedRoute from "./ProtectedRoute";
+import ChatInterface from "../views/chat/ChatInterface.jsx";
+
 
 export const MainRouter = () => {
   const location = useLocation();
@@ -38,7 +40,9 @@ export const MainRouter = () => {
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/passwordrecovery" element={<PasswordRecovery/>}/>
-       <Route path="/" element={<LandingPage/>}/>
+        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/chats" element={<ChatInterface/>}/>
+
 
         <Route
           path="/feed"

@@ -18,8 +18,7 @@ const InputWithIcon = ({ postId, setComentarios }) => {
     };
 
     socket.emit('newComment', nuevoComentario);
-
-    setComentarios((prevComentarios) => [nuevoComentario, ...prevComentarios]);
+    setComentarios((prevComentarios) => [...prevComentarios, nuevoComentario]);
 
     setTexto("");
   };
