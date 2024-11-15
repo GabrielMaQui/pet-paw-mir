@@ -64,7 +64,12 @@ const Login = () => {
         setPetData(updatedData);
 
         toast.success(t("loginSuccess"));
-        navigate("/feed");
+        if(profile.role === "ADMINISTRATOR") {
+          navigate("/admin");
+        }
+        else{
+          navigate("/feed");
+        }
 
       } else {
         toast.error(t("incorrectLogin"));
