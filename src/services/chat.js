@@ -1,4 +1,6 @@
-const BASE_URL = "http://localhost:3000/";
+const BASE_SERVER = import.meta.env.VITE_BASE_URL;
+const BASE_URL = `${BASE_SERVER}/`;
+
 const token = localStorage.getItem('token');
 
 // Headers personalizados para la autenticación
@@ -6,7 +8,6 @@ const HEADERS = {
   "Content-Type": "application/json",
   "Authorization": `Bearer ${token}`,
 };
-
 
 export async function fetchChatsByUserId(userId) {
   try {
@@ -26,7 +27,6 @@ export async function fetchChatsByUserId(userId) {
   }
 }
 
-
 export async function fetchMessagesByChatId(chatId) {
   try {
     const response = await fetch(`${BASE_URL}menssage/${chatId}`, {
@@ -44,7 +44,6 @@ export async function fetchMessagesByChatId(chatId) {
     throw error;
   }
 }
-
 
 export async function createChat(chatData) {
   try {
@@ -64,7 +63,6 @@ export async function createChat(chatData) {
     throw error;
   }
 }
-
 
 export async function sendMessage(messageData) {
   try {
@@ -87,7 +85,7 @@ export async function sendMessage(messageData) {
 
 export async function createChatIfNotExists(ownerId, friendId) {
   try {
-    
+
     const existingChats = await fetchChatsByUserId(ownerId);
 
     const chatExists = existingChats.some(chat =>
