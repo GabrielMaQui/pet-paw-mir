@@ -1,19 +1,21 @@
 const BASE_SERVER = import.meta.env.VITE_BASE_URL;
 const BASE_URL = `${BASE_SERVER}/`;
 
-const token = localStorage.getItem('token');
 
-// Headers personalizados para la autenticación
-const HEADERS = {
-  "Content-Type": "application/json",
-  "Authorization": `Bearer ${token}`,
-};
+function getHeaders() {
+  const token = localStorage.getItem("token");
+  return {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`,
+  };
+}
 
 export async function fetchChatsByUserId(userId) {
   try {
+
     const response = await fetch(`${BASE_URL}chat/user/${userId}`, {
       method: "GET",
-      headers: HEADERS,
+      headers: getHeaders(),
     });
 
     if (!response.ok) {
@@ -31,7 +33,7 @@ export async function fetchMessagesByChatId(chatId) {
   try {
     const response = await fetch(`${BASE_URL}menssage/${chatId}`, {
       method: "GET",
-      headers: HEADERS,
+      headers: getHeaders(),
     });
 
     if (!response.ok) {
@@ -49,7 +51,7 @@ export async function createChat(chatData) {
   try {
     const response = await fetch(`${BASE_URL}chat/`, {
       method: "POST",
-      headers: HEADERS,
+      headers: getHeaders(),
       body: JSON.stringify(chatData),
     });
 
@@ -68,7 +70,7 @@ export async function sendMessage(messageData) {
   try {
     const response = await fetch(`${BASE_URL}menssage/`, {
       method: "POST",
-      headers: HEADERS,
+      headers: getHeaders(),
       body: JSON.stringify(messageData),
     });
 
@@ -101,7 +103,7 @@ export async function createChatIfNotExists(ownerId, friendId) {
     // Si no existe, crear un nuevo chat
     const response = await fetch(`${BASE_URL}chat/`, {
       method: "POST",
-      headers: HEADERS,
+      headers: getHeaders(),
       body: JSON.stringify({ owner_id: ownerId, friend_id: friendId }),
     });
 

@@ -16,6 +16,12 @@ export default {
     transparent: "transparent",
     current: "currentColor",
     extend: {
+      height: {
+        'screen-minus-100': 'calc(100vh - 150px)',
+      },
+      minHeight: {
+        'screen-minus-100': 'calc(100vh - 150px)',
+      },
       colors: {
         custom: {
           50: "#FFFFFF",

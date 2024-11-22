@@ -1,5 +1,5 @@
 import { HiPaperAirplane, HiEmojiHappy } from 'react-icons/hi';
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import AvatarChat from "../../components/Chat/AvatarChat";
 import MessageBubble from "../../components/Chat/MessageBubble";
 import ChatMessage from "../../components/Chat/ChatMessage";
@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { fetchChatsByUserId, fetchMessagesByChatId, sendMessage } from '../../services/chat';
 import useWindowSize from '../../hooks/useWindowsSize';
-import { HiArrowLeft } from 'react-icons/hi';
 
 const ChatInterface = () => {
   const [activeUsers, setActiveUsers] = useState([]);
@@ -23,7 +22,17 @@ const ChatInterface = () => {
   const [isChatListVisible, setIsChatListVisible] = useState(true);
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const token = localStorage.getItem("token");
+
+
+
+  const fetchChats = useCallback (async () => {
+    try {
+      const data = await fetchChatsByUserId(user.id);
+      setChats(data);
+    } catch (err) {
+      console.error("Error al cargar los chats:", err);
+    }
+  }, [user?.id]);
 
   useEffect(() => {
     socket.emit("register", user?.id);
@@ -47,16 +56,7 @@ const ChatInterface = () => {
 
   useEffect(() => {
     fetchChats();
-  }, [user?.id, token]);
-
-  const fetchChats = async () => {
-    try {
-      const data = await fetchChatsByUserId(user.id);
-      setChats(data);
-    } catch (err) {
-      console.error("Error al cargar los chats:", err);
-    }
-  };
+  }, [fetchChats]);
 
   const fetchMessages = async (chatId) => {
     try {
@@ -115,10 +115,10 @@ const ChatInterface = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen-minus-100">
       {/* Panel izquierdo: Lista de chats */}
       {(isChatListVisible || width >= 768) && (
-        <div className="w-full md:w-1/4 border-r flex flex-col bg-white">
+        <div className="w-full max-h-96 md:w-2/6 border-r flex flex-col bg-white">
           <div className="bg-custom-150 p-4 flex items-center gap-3">
             <AvatarChat image={user.avatar} />
             <div>
@@ -138,22 +138,10 @@ const ChatInterface = () => {
           </div>
         </div>
       )}
-
-      {/* Panel derecho: Área de mensajes */}
-      {!isChatListVisible && width < 768 && selectedChat && (
-        <button
-          onClick={handleBackToChatList}
-          className="p-2 bg-custom-75 text-custom-200 flex items-center"
-        >
-          <HiArrowLeft className="w-6 h-6" />
-          {t("back")}
-        </button>
-      )}
-
       <div className="flex-1 flex flex-col bg-white">
         {selectedChat ? (
           <>
-            <div className="border-b p-4 flex items-center gap-4">
+            <div className="border-b p-4 flex items-center justify-center gap-4">
               <AvatarChat size="lg" image={imageChat} />
               <div>
                 <h2 className="text-custom-350">{selectedChat.members.find((m) => m.id !== user.id)?.name}</h2>
@@ -167,9 +155,14 @@ const ChatInterface = () => {
                <br></br>
               <Link to={`/user/${selectedChat.members.find((m) => m.id !== user.id).id}`}>
                   <button className="mt-2 px-4 py-1 bg-custom-75 text-custom-200 rounded-full text-sm">
-                    Ver perfil
+                    {t('seeProfile')}
                   </button>
               </Link>
+              {!isChatListVisible && width < 768 && selectedChat && (
+                <button onClick={handleBackToChatList} className="mt-2 px-4 py-1 bg-custom-75 text-custom-200 rounded-full text-sm">
+                {t("goBack")}
+                </button>
+              )}
               </div>
             </div>
             <div className="flex-1 overflow-y-auto px-4 py-2" ref={conversationRef}>
