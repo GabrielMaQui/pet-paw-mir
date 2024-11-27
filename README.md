@@ -21,7 +21,7 @@
 <br>
 
 **Repositorio BackEnd:**
-<br>
+
 <a href="https://github.com/GabrielMaQui/pet-paw-mir-backend" style="margin-right: 15">
   <img src="src/assets/img/readme//images/icon-svg/github.svg" alt="GitHub Icon" width="60" />
 </a>
