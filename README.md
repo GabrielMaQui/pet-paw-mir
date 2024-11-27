@@ -18,9 +18,12 @@
   <img src="src/assets/img/readme//images/icon-svg/discord.svg" alt="Discord Icon" width="60"/>
 </a>
 </div>
+<br>
 
 **Repositorio BackEnd:**
+<br>
 [PetPaws BackEnd](https://github.com/GabrielMaQui/pet-paw-mir-backend)
+
 
 <br>
 
