@@ -23,7 +23,7 @@ describe('Details Publication', () => {
 
     cy.get('.grid > div').should('have.length.greaterThan', 1);
 
-    
+
     cy.get('.grid > div').eq(1).click();
     cy.url().should('match', /\/pet\/\d+$/);
     cy.get('img[alt="Pet"]').should('be.visible');
