@@ -24,6 +24,9 @@
 <br>
 [PetPaws BackEnd](https://github.com/GabrielMaQui/pet-paw-mir-backend)
 
+**Usuario de Administrador**:
+**Mail**: petpawsa@gmail.com
+**Password**: admin1234
 
 <br>
 
