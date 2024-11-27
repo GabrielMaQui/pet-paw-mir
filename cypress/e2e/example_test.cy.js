@@ -25,7 +25,7 @@ describe('Login Page', () => {
     cy.get('@loginButton').click();
     // Verifica la redirección y el contenido del feed
     cy.url().should('include', '/feed');
-  
+
     cy.get("footer").should("exist").find("button").contains("logout").click();
 
   });
